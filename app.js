@@ -1,8 +1,10 @@
 import express from 'express';
 import bodyParser from "body-parser";
 import cors from "cors";
+import dotenv from 'dotenv';
 import userRoutes from './routes';
 
+dotenv.config();
 const { json, urlencoded } = bodyParser;
 const app = express();
 const PORT = process.env.PORT
@@ -17,9 +19,11 @@ app.get('/v1', (req, res) => {
 app.use('/v1', userRoutes(express))
 
 
-app.listen(PORT, (err) => {
+const server = app.listen(PORT, (err) => {
   if (err) {
     throw new Error(err.message);
   }
   console.log(`server is running on port ${PORT}`);
 });
+
+export default server;
