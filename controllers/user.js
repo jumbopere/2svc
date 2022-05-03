@@ -1,12 +1,20 @@
 import db from '../models';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import { UserHelper, handleError } from '../utils';
-
+import { registerValidator } from '../utils/validate';
+dotenv.config();
 const secretKey = process.env.JWT_SECRET_KEY;
 
 export default {
   register: async (req, res) => {
-    const { email } = req.body;
+    const { errors, isValid } = registerValidator(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const { firstName, lastName, email, password } = req.body;
     try {
       const returnedUser = await db.User.findOne({
         where: { email: req.body.email },
@@ -18,7 +26,7 @@ export default {
         });
       }
       try {
-        const user = await db.User.create(req.body);
+        const user = await db.User.create({firstName, lastName, email: email.toLowerCase(), password});
         const jwtData = {
           email: user.email,
           userId: user.id,
@@ -32,7 +40,7 @@ export default {
           userObj,
         });
       } catch (error) {
-        console.log(error, 'er')
+        console.log(error, 'er');
         return res.status(400).json({
           status: 400,
           message: 'Bad request sent to the server',

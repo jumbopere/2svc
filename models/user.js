@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           len: {
-            args: [4, 100],
+            args: [7, 100],
             msg: 'Your password is too short',
           },
         },
