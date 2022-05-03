@@ -1,7 +1,8 @@
-import { Users } from '../controllers'
+import { Users } from '../controllers';
 
-module.exports = (app) => {
-    app.post('/api/v1/user/create', Users.create);
-    
+module.exports = (express) => {
+  const router = express.Router();
+  router.post('/user/register', Users.register);
 
-}
+  return router;
+};
