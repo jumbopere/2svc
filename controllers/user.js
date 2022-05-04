@@ -38,6 +38,7 @@ export default {
           expiresIn: 86400,
           token,
           userObj,
+         
         });
       } catch (error) {
         console.log(error, 'er');
