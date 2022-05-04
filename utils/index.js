@@ -12,8 +12,10 @@ export const UserHelper = {
       id: user.id,
       username: user.username,
       email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      updatedAt: user.updatedAt,
     };
 
     return attributes;
@@ -21,13 +23,13 @@ export const UserHelper = {
 };
 
 /**
-* handle error util function
-* @param {Object} error
-* @returns {Array} - Returns an error
-*/
-export const handleError = error => {
+ * handle error util function
+ * @param {Object} error
+ * @returns {Array} - Returns an error
+ */
+export const handleError = (error) => {
   const result = {};
-  error.errors.forEach(err => {
+  error.errors.forEach((err) => {
     result[err.path] = err.message;
   });
 
